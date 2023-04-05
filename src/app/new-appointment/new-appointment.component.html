@@ -1,0 +1,14 @@
+<div class="container">
+
+    <h1>Create a new appointment</h1>
+    <p>* Choose a day to your appointment</p>
+    <mat-card class="calendar">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+    </mat-card>
+
+    <br>
+
+    <div class="example-button-row">
+        <button mat-raised-button color="primary" (click)="createAppointment()">Create appointment</button>
+    </div>
+</div>

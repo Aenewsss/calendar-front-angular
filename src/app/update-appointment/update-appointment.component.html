@@ -1,0 +1,29 @@
+<div class="container">
+    <h1>Update an appointment</h1>
+    <span>* Choose an appointment from the list and click to update</span>
+
+    <br>
+
+    <ul class="appointments-lits delete">
+        <li *ngFor="let appointment of appointments" (click)="selectAppointment(appointment._id)">
+            {{appointment.date}}
+        </li>
+    </ul>
+
+    <div class="mt-5 container">
+        <mat-form-field appearance="fill">
+            <mat-label>Selected Appointment</mat-label>
+            <input matInput [(ngModel)]="currentAppointmentDate">
+        </mat-form-field>
+
+        <mat-card class="calendar">
+            <mat-calendar [(selected)]="newAppointmentSelected" ></mat-calendar>
+        </mat-card>
+
+        <br>
+        
+        <div class="example-button-row">
+            <button mat-raised-button color="primary" (click)="updateAppointment(currentAppointmentId)">Update</button>
+        </div>
+    </div>
+</div>

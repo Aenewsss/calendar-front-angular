@@ -1,0 +1,21 @@
+<div *ngIf="appointments.length > 0" class="calendar-container">
+
+    <h1>Your appointments</h1>
+
+    <ul class="appointments-lits">
+        <li *ngFor="let appointment of appointments">
+            {{appointment.date}}
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="appointments.length === 0" class="calendar-container">
+
+    <h1>You don't have appointments yet</h1>
+
+    <br>
+
+    <div class="example-button-row">
+        <button mat-raised-button color="primary">Make a new Appointment</button>
+    </div>
+</div>

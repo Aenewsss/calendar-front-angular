@@ -1,0 +1,13 @@
+<div class="container">
+
+    <h1>Delete an appointment</h1>
+    <span>* Choose an appointment from the list and click to delete</span>
+
+    <br>
+
+    <ul class="appointments-lits delete">
+        <li *ngFor="let appointment of appointments" (click)="deleteAppointment(appointment._id)">
+            {{appointment.date}}
+        </li>
+    </ul>
+</div>
