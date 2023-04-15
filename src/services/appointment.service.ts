@@ -16,7 +16,7 @@ export class AppointmentService {
   }
 
   GetAppointments(): Observable<IAppointmentResponse> {
-    return this.client.get<IAppointmentResponse>(environment.apiAdress + "/list-appointments")
+    return this.client.get<IAppointmentResponse>("/api/list-appointments")
   }
 
   GetAppointmentById(id: string): Observable<IAppointmentResponseById> {

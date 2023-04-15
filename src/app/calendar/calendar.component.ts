@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { IAppointment } from 'src/interfaces/appointment.interface';
 import { AppointmentService } from 'src/services/appointment.service';
 
