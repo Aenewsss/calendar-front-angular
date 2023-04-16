@@ -7,35 +7,42 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
-  selectedDate: string = this.getSelectedDate();
-  selectedIndex: number = this.getDayOfYear()
+  selectedDate: string = this.handleSelectedDate();
+  selectedIndex: number = this.getTodayDayOfYear()
 
-  getSelectedDate() {
-    const dayOfYear = this.getDayOfYear()
+  handleSelectedDate(newDayOfYear?: number) {
+    let dayOfYear;
+
+    dayOfYear = newDayOfYear ? newDayOfYear : this.getTodayDayOfYear()
+
     const currentDate = new Date()
 
     currentDate.setMonth(0)
     currentDate.setDate(dayOfYear)
+
     return this.formatDate(currentDate)
   }
 
-  formatDate(date: Date): string {
-    const todayDay = date.getDay();
+  formatDate(date: Date) {
+    const todayDay = date.getDate();
     const todayMonth = date.toLocaleDateString('pt-BR', { month: 'long' })
     const todayYear = date.getFullYear();
 
-    return todayDay + ' de ' + todayMonth + ' de ' + todayYear
+    return this.selectedDate = todayDay + ' de ' + todayMonth + ' de ' + todayYear
   }
 
-  getDayOfYear(): number {
-    return Math.ceil((Number(new Date()) - Number(new Date(new Date().getFullYear(), 0, 1))) / (1000 * 60 * 60 * 24));
+  getTodayDayOfYear() {
+    return this.selectedIndex = Math.ceil((Number(new Date()) - Number(new Date(new Date().getFullYear(), 0, 1))) / (1000 * 60 * 60 * 24));
   }
 
   handlePage(e: PageEvent) {
     this.handleDayOfYear(e.pageIndex)
+    this.handleSelectedDate(e.pageIndex)
   }
 
   handleDayOfYear(dayOfYear: number) {
     this.selectedIndex = dayOfYear
   }
+
+
 }

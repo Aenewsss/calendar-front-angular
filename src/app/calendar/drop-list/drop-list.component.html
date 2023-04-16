@@ -1,0 +1,10 @@
+<section class="hours-list">
+  <mat-list role="list">
+    <mat-list-item *ngFor="let hour of dayHours" role="listitem">{{hour}}</mat-list-item>
+  </mat-list>
+
+  <div cdkDropList class="drop-list" (cdkDropListDropped)="drop($event)">
+    <div class="drop-box" *ngFor="let appointment of appointments" [cdkDragDisabled]="appointment.disabled" cdkDrag>{{appointment.value}}</div>
+  </div>
+
+</section>

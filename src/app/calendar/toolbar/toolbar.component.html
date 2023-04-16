@@ -3,13 +3,13 @@
         <mat-icon>menu</mat-icon>
     </button>
     <span>Payever Calendar</span>
-    
+
     <span class="toolbar-spacer"></span>
     {{selectedDate}}
-    <mat-paginator class="paginator" [showFirstLastButtons]="false" [hidePageSize]="true" [length]="365" [pageSize]="1" [pageIndex]="selectedIndex" (page)="handlePage($event)" aria-label="Select page">
-
+    <mat-paginator class="paginator" [showFirstLastButtons]="false" [hidePageSize]="true" [length]="365" [pageSize]="1"
+        [pageIndex]="selectedIndex" (page)="handlePage($event)" aria-label="Select page">
     </mat-paginator>
-    
+
     <span class="toolbar-spacer"></span>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
         <mat-icon>favorite</mat-icon>

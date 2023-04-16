@@ -11,13 +11,17 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { ToolbarComponent } from './toolbar/toolbar.component'
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { DropListComponent } from './drop-list/drop-list.component'
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
     CalendarComponent,
     NewAppointmentComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    DropListComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +33,9 @@ import { ToolbarComponent } from './toolbar/toolbar.component'
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    DragDropModule,
+    MatListModule
   ]
 })
   export class CalendarModule { }
