@@ -1,14 +1,3 @@
-<div class="container">
-
-    <h1>Create a new appointment</h1>
-    <p>* Choose a day to your appointment</p>
-    <mat-card class="calendar">
-        <mat-calendar [(selected)]="selected"></mat-calendar>
-    </mat-card>
-
-    <br>
-
-    <div class="example-button-row">
-        <button mat-raised-button color="primary" (click)="createAppointment()">Create appointment</button>
-    </div>
-</div>
+<button class="btn-new-appointment" (click)="openDialog()" mat-fab matTooltip="Primary" color="accent" aria-label="Example fab with a heart icon">
+    <mat-icon>add</mat-icon>
+</button>

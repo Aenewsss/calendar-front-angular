@@ -1,4 +1,4 @@
-export const emptyList = [
+export const EMPTY_LIST = [
     { value: '', disabled: true },
     { value: '', disabled: true },
     { value: '', disabled: true },

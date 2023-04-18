@@ -1,0 +1,37 @@
+.btn-new-appointment {
+    margin-left: 0.8em;
+    margin-top: 1em;
+}
+
+.modal {
+    padding: 1em;
+    min-width: 450px;
+}
+
+form {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.form-field {
+    width: 100%;
+}
+
+textarea {
+    resize: none;
+}
+
+.mat-calendar {
+    max-width: 250px;
+    width: 80%;
+}
+
+.calendar-time{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}

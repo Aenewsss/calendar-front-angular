@@ -25,10 +25,10 @@ export class ToolbarComponent {
 
   formatDate(date: Date) {
     const todayDay = date.getDate();
-    const todayMonth = date.toLocaleDateString('pt-BR', { month: 'long' })
+    const todayMonth = date.toLocaleDateString('en-US', { month: 'long' })
     const todayYear = date.getFullYear();
 
-    return this.selectedDate = todayDay + ' de ' + todayMonth + ' de ' + todayYear
+    return this.selectedDate = `${todayMonth}  ${todayDay},  ${todayYear}`
   }
 
   getTodayDayOfYear() {

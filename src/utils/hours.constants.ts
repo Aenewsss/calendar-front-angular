@@ -1,4 +1,4 @@
-export const dayHours = [
+export const DAY_HOURS = [
     '01:00',
     '02:00',
     '03:00',

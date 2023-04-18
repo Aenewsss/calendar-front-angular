@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { CalendarModule } from './calendar/calendar.module';
 import { AppRoutingModule } from './app-routing.module';
+import { CalendarModule } from './calendar/calendar.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -11,7 +12,9 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     CalendarModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
