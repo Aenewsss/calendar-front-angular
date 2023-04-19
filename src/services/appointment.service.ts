@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { IAppointment, IAppointmentResponse, IAppointmentResponseById } from 'src/interfaces/appointment.interface';
-import {  Observable, Subject } from "rxjs"
+import { Observable, Subject } from "rxjs"
 import { AppointmentDto } from 'src/dtos/appointment.dto';
 import { v4 as uuidv4 } from 'uuid';
 @Injectable({
@@ -39,14 +39,37 @@ export class AppointmentService {
     return newAppointment
   }
 
-  UpdateAppointmentById(id: string, newDate: Date): Observable<IAppointmentResponseById> {
-    return this.client.put<IAppointmentResponseById>(this.apiBaseUrl + `/update-appointment/${id}`, {
-      date: newDate
+  UpdateAppointmentById(appointment: AppointmentDto): Observable<IAppointmentResponse> {
+    const updatedAppointment = this.client.put<IAppointmentResponse>(this.apiBaseUrl + `/${appointment.id}`, {
+      id: appointment.id,
+      time: appointment.time,
+      date: appointment.date,
+      title: appointment.title,
+      description: appointment.description,
     })
+
+    
+    updatedAppointment.subscribe(() => {
+      this.GetAppointments().subscribe(response => {
+        console.log(response)
+        this.appointmentsUpdated.next(response);
+      })
+    })
+
+    return updatedAppointment
   }
 
-  DeleteAppointmentById(id: string): Observable<IAppointmentResponseById> {
-    return this.client.delete<IAppointmentResponseById>(this.apiBaseUrl + `/remove-appointment/${id}`)
+  DeleteAppointmentById(id: string): Observable<IAppointmentResponse> {
+    const deletedAppointment = this.client.delete<IAppointmentResponse>(this.apiBaseUrl + `/${id}`)
+
+    deletedAppointment.subscribe(() => {
+      this.GetAppointments().subscribe(response => {
+        console.log(response)
+        this.appointmentsUpdated.next(response);
+      })
+    })
+
+    return deletedAppointment
   }
 
   getAppointmentsUpdateListener(): Observable<IAppointmentResponse> {

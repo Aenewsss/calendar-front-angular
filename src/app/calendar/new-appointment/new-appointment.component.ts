@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AppointmentDto } from 'src/dtos/appointment.dto';
+import { IModalData } from 'src/interfaces/modal-data.interface';
 import { AppointmentService } from 'src/services/appointment.service';
+import { DateService } from 'src/services/date.service';
 import { SELECT_HOURS, } from 'src/utils/select-hours.constants';
 
 @Component({
@@ -15,16 +18,32 @@ export class NewAppointmentComponent {
 
   constructor(
     public dialog: MatDialog,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private dateService: DateService,
   ) {
     this.appointmentService.GetAppointments().subscribe(el => console.log(el))
   }
 
+  private datesSub!: Subscription;
+  private currentDate !: Date;
 
-  openDialog() {
-    this.dialog.open(ModalNewAppointment);
+  ngOnInit() {
+    this.datesSub = this.dateService
+      .getToolbarDateUpdateListener()
+      .subscribe((toolbarDateUpdated: Date) => {
+        this.currentDate = toolbarDateUpdated;
+      });
   }
 
+  ngOnDestroy() {
+    this.datesSub.unsubscribe();
+  }
+
+  openDialog() {
+    this.dialog.open(ModalNewAppointment, {
+      data: { currentDate: this.currentDate }
+    });
+  }
 
 }
 
@@ -37,23 +56,19 @@ export class ModalNewAppointment {
   constructor(
     public dialogRef: MatDialogRef<ModalNewAppointment>,
     private appointmentsService: AppointmentService,
+    @Inject(MAT_DIALOG_DATA) public data: IModalData,
   ) { }
 
+
   selectHours: string[] = SELECT_HOURS
-  selected: Date = new Date();
 
   appointmentTitle!: string;
   appointmentTime!: string;
-  appointmentDate: Date = new Date();
+  appointmentDate: Date = this.data.currentDate || new Date();
   appointmentDescription!: string;
-
 
   onCloseClick(): void {
     this.dialogRef.close();
-  }
-
-  validateForm() {
-    return false
   }
 
   async createAppointment() {

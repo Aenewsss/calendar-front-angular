@@ -1,0 +1,10 @@
+.buttons-appointment {
+    display: flex;
+    gap: 1em;
+    justify-content: space-between;
+    align-items: center;
+
+    button:last-child{
+        width: 70%;
+    }
+}

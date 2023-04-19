@@ -4,7 +4,7 @@
   </mat-list>
 
   <div cdkDropList class="drop-list" (cdkDropListDropped)="drop($event)">
-    <div class="drop-box" *ngFor="let appointment of appointments" [cdkDragDisabled]="appointment.disabled" cdkDrag>
+    <div (click)="!appointment.disabled && openAppointment(appointment.appointment)" class="drop-box" *ngFor="let appointment of appointments" [cdkDragDisabled]="appointment.disabled" cdkDrag>
       <span *ngIf="!appointment.disabled">
         {{appointment.appointment.title}}, {{appointment.appointment.time}}
       </span>

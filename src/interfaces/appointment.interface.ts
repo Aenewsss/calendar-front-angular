@@ -1,5 +1,5 @@
 export interface IAppointment {
-    id: string | number,
+    id: string,
     title: string,
     date: Date,
     time: string,
@@ -14,3 +14,6 @@ export interface IAppointmentResponseById {
     appointment: IAppointment
 }
 
+export interface IModalAppointment {
+    currentAppointment: IAppointment
+}

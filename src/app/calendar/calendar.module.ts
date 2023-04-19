@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule,  } from '@angular/forms';
+import { ModalAppointmentComponent } from './modal-appointment/modal-appointment.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FormsModule,  } from '@angular/forms';
     ToolbarComponent,
     DropListComponent,
     ModalNewAppointment,
+    ModalAppointmentComponent,
   ],
   imports: [
     FormsModule,

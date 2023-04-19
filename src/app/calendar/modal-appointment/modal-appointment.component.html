@@ -1,0 +1,62 @@
+<div class="modal">
+    <div mat-dialog-actions style="padding: 0;">
+        <button mat-button mat-dialog-close (click)="onCloseClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content>
+        <form>
+            <mat-form-field class="form-field">
+                <mat-label>Title</mat-label>
+                <input required matInput placeholder="Meeting with payever" [(ngModel)]="appointmentTitle"
+                    name="appointmentTitle" type="text">
+            </mat-form-field>
+
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Change date and/or time</mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="calendar-time">
+                        <mat-calendar [(selected)]="appointmentDate"></mat-calendar>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Time</mat-label>
+                            <mat-select required [(ngModel)]="appointmentTime" name="appointmentTime">
+                                <mat-option *ngFor="let hour of selectHours" [value]="hour">
+                                    {{hour}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Add description</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-form-field class="form-field">
+                        <mat-label>Description</mat-label>
+                        <textarea [(ngModel)]="appointmentDescription" name="appointmentDescription" matInput placeholder="Meeting with payever" rows="3"></textarea>
+                    </mat-form-field>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <div class="buttons-appointment">
+                <button mat-flat-button color="warn" (click)="deleteAppointment()" >
+                    <mat-icon>delete</mat-icon>
+                    <mat-label>Delete</mat-label>
+                </button>
+                <button mat-flat-button color="accent" (click)="updateAppointment()" [disabled]="!appointmentTime || !appointmentTitle || !appointmentDate">
+                    <mat-icon>calendar_month</mat-icon>
+                    <mat-label>Update</mat-label>
+                </button>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+</div>

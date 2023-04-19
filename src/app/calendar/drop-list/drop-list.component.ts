@@ -7,6 +7,8 @@ import { DAY_HOURS } from 'src/utils/hours.constants';
 import { IAppointment, IAppointmentResponse } from 'src/interfaces/appointment.interface';
 import { DateService } from 'src/services/date.service';
 import { IEmptyList } from 'src/interfaces/empty-list.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalAppointmentComponent } from '../modal-appointment/modal-appointment.component';
 
 @Component({
   selector: 'app-drop-list',
@@ -18,12 +20,13 @@ export class DropListComponent implements OnInit {
   constructor(
     private appointmentsService: AppointmentService,
     private dateService: DateService,
+    public dialog: MatDialog,
   ) { }
 
-  appointments = EMPTY_LIST;
+  appointments: IEmptyList[] = EMPTY_LIST;
   dayHours = DAY_HOURS;
 
-  currentDate: Date = new Date();
+  private currentDate: Date = new Date();
 
   private appointmentsSub!: Subscription;
   private datesSub!: Subscription;
@@ -38,7 +41,6 @@ export class DropListComponent implements OnInit {
     this.datesSub = this.dateService
       .getToolbarDateUpdateListener()
       .subscribe((toolbarDateUpdated: Date) => {
-        console.log('new date:', toolbarDateUpdated)
         this.currentDate = toolbarDateUpdated;
 
         this.appointmentsService.GetAppointments().subscribe(result => this.updateList(result))
@@ -54,38 +56,92 @@ export class DropListComponent implements OnInit {
 
   updateList(appointmentsUpdated: IAppointmentResponse) {
 
+    this.verifyEmptyList(appointmentsUpdated)
+
+    this.verififyLengthDifference(appointmentsUpdated)
+
     Object.values(appointmentsUpdated).forEach((appointment: IAppointment) => {
 
-      console.log(this.currentDate.getDate(), new Date(appointment.date).getDate())
+      const currentAppointmentIndex = this.appointments.findIndex(el => el.appointment.id == appointment.id)
+
+      this.appointments[currentAppointmentIndex] = {
+        appointment: {
+          id: '', title: '', date: new Date(), time: ''
+        },
+        disabled: true
+      }
 
       if (this.currentDate.getDate() == new Date(appointment.date).getDate()) {
 
-        const hourFormatted = this.formatHourNumber(appointment.time)
+        const hourFormatted = this.formatTimeIndex(appointment.time)
 
         this.appointments[hourFormatted] = {
           appointment: {
-           id: appointment.id, title: appointment.title, date: appointment.date, time: appointment.time
+            id: appointment.id, title: appointment.title, date: appointment.date, time: appointment.time
           },
           disabled: false
-        }
-      } else {
-        const currentAppointmentIndex = this.appointments.findIndex(el => el.appointment.id == appointment.id)
-
-        this.appointments[currentAppointmentIndex] = {
-          appointment: {
-            _id: '', title: '', date: '', time: ''
-          },
-          disabled: true
         }
       }
     })
   }
 
-  formatHourNumber(time: string) {
+  formatTimeIndex(time: string) {
     return Number(time.split(':')[0])
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.appointments, event.previousIndex, event.currentIndex);
+    this.changeHourAfterMove(event.previousIndex, event.currentIndex)
   }
+
+  changeHourAfterMove(previousIndex: number, currentIndex: number) {
+    this.appointments[currentIndex].appointment.time = this.formatHour(currentIndex)
+    this.appointmentsService.UpdateAppointmentById(this.appointments[currentIndex].appointment)
+  }
+
+  formatHour(hour: number): string {
+    return `${hour.toString().padStart(2, '0')}:00`
+  }
+
+  openAppointment(appointment: IAppointment) {
+    this.dialog.open(ModalAppointmentComponent, {
+      data: { currentAppointment: appointment }
+    });
+  }
+
+  verifyEmptyList(appointmentsUpdated: IAppointmentResponse) {
+    if (!Object.values(appointmentsUpdated).length) {
+      this.appointments = new Array(24).fill({
+        appointment: {
+          id: '',
+          title: '',
+          date: '',
+          time: '',
+          description: '',
+        },
+        disabled: true
+      })
+    }
+  }
+
+  verififyLengthDifference(appointmentsUpdated: IAppointmentResponse) {
+    const disabled = this.appointments.filter(el => el.disabled == false)
+
+    console.log(disabled)
+    console.log(Object.values(appointmentsUpdated))
+
+    if(disabled > Object.values(appointmentsUpdated)){
+      this.appointments = new Array(24).fill({
+        appointment: {
+          id: '',
+          title: '',
+          date: '',
+          time: '',
+          description: '',
+        },
+        disabled: true
+      })
+    }
+  }
+
 }
