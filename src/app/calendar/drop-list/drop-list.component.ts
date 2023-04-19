@@ -6,6 +6,7 @@ import { EMPTY_LIST } from 'src/utils/empty-list.constants';
 import { DAY_HOURS } from 'src/utils/hours.constants';
 import { IAppointment, IAppointmentResponse } from 'src/interfaces/appointment.interface';
 import { DateService } from 'src/services/date.service';
+import { IEmptyList } from 'src/interfaces/empty-list.interface';
 
 @Component({
   selector: 'app-drop-list',
@@ -39,6 +40,9 @@ export class DropListComponent implements OnInit {
       .subscribe((toolbarDateUpdated: Date) => {
         console.log('new date:', toolbarDateUpdated)
         this.currentDate = toolbarDateUpdated;
+
+        this.appointmentsService.GetAppointments().subscribe(result => this.updateList(result))
+
       });
 
   }
@@ -49,18 +53,29 @@ export class DropListComponent implements OnInit {
   }
 
   updateList(appointmentsUpdated: IAppointmentResponse) {
-    Object.values(appointmentsUpdated).forEach((appointment: IAppointment) => {
-      console.log(appointment.date)
-      if (this.currentDate.getDate() == appointment.date.getDate()) {
 
+    Object.values(appointmentsUpdated).forEach((appointment: IAppointment) => {
+
+      console.log(this.currentDate.getDate(), new Date(appointment.date).getDate())
+
+      if (this.currentDate.getDate() == new Date(appointment.date).getDate()) {
 
         const hourFormatted = this.formatHourNumber(appointment.time)
 
         this.appointments[hourFormatted] = {
           appointment: {
-            _id: appointment._id, title: appointment.title, date: appointment.date, time: appointment.time
+           id: appointment.id, title: appointment.title, date: appointment.date, time: appointment.time
           },
           disabled: false
+        }
+      } else {
+        const currentAppointmentIndex = this.appointments.findIndex(el => el.appointment.id == appointment.id)
+
+        this.appointments[currentAppointmentIndex] = {
+          appointment: {
+            _id: '', title: '', date: '', time: ''
+          },
+          disabled: true
         }
       }
     })

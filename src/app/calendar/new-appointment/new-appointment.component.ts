@@ -64,6 +64,7 @@ export class ModalNewAppointment {
       description: this?.appointmentDescription
     }
     this.appointmentsService.NewAppointment(appointment).subscribe(res => console.log(res))
+    this.dialogRef.close();
   }
 
 }

@@ -1,5 +1,5 @@
 export interface IAppointment {
-    _id: string | number,
+    id: string | number,
     title: string,
     date: Date,
     time: string,
