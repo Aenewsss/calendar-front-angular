@@ -63,7 +63,7 @@ export class ModalNewAppointment {
   selectHours: string[] = SELECT_HOURS
 
   appointmentTitle!: string;
-  appointmentTime!: string;
+  appointmentTime: string = this.getCurrentHour();
   appointmentDate: Date = this.data.currentDate || new Date();
   appointmentDescription!: string;
 
@@ -80,6 +80,14 @@ export class ModalNewAppointment {
     }
     this.appointmentsService.NewAppointment(appointment).subscribe(res => console.log(res))
     this.dialogRef.close();
+  }
+
+  getCurrentHour(): string {
+    const hour = new Date().getHours()
+    const minutes = new Date().getMinutes()
+
+    return  this.selectHours.filter(el => el.split(':')[0] == hour.toString() && Number(el.split(':')[1]) > minutes)[0]
+
   }
 
 }
