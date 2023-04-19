@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AppointmentDto } from 'src/dtos/appointment.dto';
 import { AppointmentService } from 'src/services/appointment.service';
 import { SELECT_HOURS, } from 'src/utils/select-hours.constants';
 
@@ -13,8 +14,11 @@ import { SELECT_HOURS, } from 'src/utils/select-hours.constants';
 export class NewAppointmentComponent {
 
   constructor(
-    public dialog: MatDialog
-  ) { this.openDialog() }
+    public dialog: MatDialog,
+    private appointmentService: AppointmentService
+  ) {
+    this.appointmentService.GetAppointments().subscribe(el => console.log(el))
+  }
 
 
   openDialog() {
@@ -29,7 +33,7 @@ export class NewAppointmentComponent {
   templateUrl: 'modal-new-appointment.html',
   styleUrls: ['./new-appointment.component.scss']
 })
-export class ModalNewAppointment  {
+export class ModalNewAppointment {
   constructor(
     public dialogRef: MatDialogRef<ModalNewAppointment>,
     private appointmentsService: AppointmentService,
@@ -40,7 +44,8 @@ export class ModalNewAppointment  {
 
   appointmentTitle!: string;
   appointmentTime!: string;
-  appointmentDate!: Date;
+  appointmentDate: Date = new Date();
+  appointmentDescription!: string;
 
 
   onCloseClick(): void {
@@ -52,8 +57,13 @@ export class ModalNewAppointment  {
   }
 
   async createAppointment() {
-    console.log(this.appointmentTitle, this.appointmentTime, this.appointmentDate	)
-    this.appointmentsService.NewAppointment(this.selected).subscribe(res => console.log(res))
+    const appointment: AppointmentDto = {
+      title: this.appointmentTitle,
+      time: this.appointmentTime,
+      date: this.appointmentDate,
+      description: this?.appointmentDescription
+    }
+    this.appointmentsService.NewAppointment(appointment).subscribe(res => console.log(res))
   }
 
 }

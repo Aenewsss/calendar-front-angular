@@ -1,8 +1,9 @@
 export interface IAppointment {
-    _id: string,
+    _id: string | number,
     title: string,
-    description: string,
-    date: Date
+    date: Date,
+    time: string,
+    description?: string,
 }
 
 export interface IAppointmentResponse {
@@ -12,3 +13,4 @@ export interface IAppointmentResponse {
 export interface IAppointmentResponseById {
     appointment: IAppointment
 }
+
