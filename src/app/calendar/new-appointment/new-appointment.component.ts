@@ -101,11 +101,11 @@ export class ModalNewAppointmentComponent implements OnInit {
   }
 
   checkAvailableTimes(appointments: IAppointmentResponse) {
-    if(this.appointmentDate.getDate() == new Date().getDate()){
+    if ((new Date(this.appointmentDate).getDate() == new Date().getDate()) && (new Date(this.appointmentDate).getMonth() == new Date().getMonth())) {
       const unavailableTimes = Object.values(appointments)?.flatMap((el: IAppointment) => SELECT_HOURS.filter(hour => hour.split(':')[0] == el.time.split(':')[0]))
-      
+
       const availableTimes = this.selectHours.filter(hour => !unavailableTimes.includes(hour))
-      
+
       this.selectHours = availableTimes
     }
   }
