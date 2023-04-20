@@ -64,3 +64,17 @@
 .cdk-drag-disabled {
     cursor: default;
 }
+
+.appointment-text {
+    font-size: 16px;
+
+    p {
+        font-size: 12px;
+        color: rgb(101, 101, 101);
+    }
+}
+
+.calendar {
+    margin: 1em;
+    min-width: 250px;
+}

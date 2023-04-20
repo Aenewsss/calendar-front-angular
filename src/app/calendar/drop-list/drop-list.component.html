@@ -1,12 +1,18 @@
 <section class="hours-list">
+
+  <div class="calendar">
+    <mat-calendar [(selected)]="selectedDate" (selectedChange)="goToDate($event)"></mat-calendar>
+  </div>
+
   <mat-list role="list">
     <mat-list-item *ngFor="let hour of dayHours" role="listitem">{{hour}}</mat-list-item>
   </mat-list>
 
   <div cdkDropList class="drop-list" (cdkDropListDropped)="drop($event)">
     <div (click)="!appointment.disabled && openAppointment(appointment.appointment)" class="drop-box" *ngFor="let appointment of appointments" [cdkDragDisabled]="appointment.disabled" cdkDrag>
-      <span *ngIf="!appointment.disabled">
+      <span *ngIf="!appointment.disabled" class="appointment-text">
         {{appointment.appointment.title}}, {{appointment.appointment.time}}
+        <p [hidden]="!appointment.appointment.description">{{appointment.appointment.description}}</p>
       </span>
     </div>
   </div>

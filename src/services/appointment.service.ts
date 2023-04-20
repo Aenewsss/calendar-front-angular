@@ -51,7 +51,6 @@ export class AppointmentService {
     
     updatedAppointment.subscribe(() => {
       this.GetAppointments().subscribe(response => {
-        console.log(response)
         this.appointmentsUpdated.next(response);
       })
     })
@@ -64,7 +63,6 @@ export class AppointmentService {
 
     deletedAppointment.subscribe(() => {
       this.GetAppointments().subscribe(response => {
-        console.log(response)
         this.appointmentsUpdated.next(response);
       })
     })

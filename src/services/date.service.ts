@@ -37,6 +37,13 @@ export class DateService {
     return Math.ceil((Number(new Date()) - Number(new Date(new Date().getFullYear(), 0, 1))) / (1000 * 60 * 60 * 24))
   }
 
+  changeDayOfYearByDate(date: Date){
+    const dayOfYear = Math.ceil((Number(date) - Number(new Date(date.getFullYear(), 0, 1))) / (1000 * 60 * 60 * 24)) + 1
+
+    this.handleSelectedDate(dayOfYear)
+    this.selectedIndexUpdated.next(dayOfYear)
+  }
+
   handleDayOfYear(dayOfYear: number) {
     this.selectedIndexUpdated.next(dayOfYear)
   }

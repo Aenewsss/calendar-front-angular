@@ -26,6 +26,8 @@ export class DropListComponent implements OnInit, OnDestroy {
   appointments: IEmptyList[] = EMPTY_LIST;
   dayHours = DAY_HOURS;
 
+  selectedDate: Date = new Date()
+
   private currentDate: Date = new Date();
 
   private appointmentsSub!: Subscription;
@@ -104,7 +106,6 @@ export class DropListComponent implements OnInit, OnDestroy {
   }
 
   openAppointment(appointment: IAppointment) {
-    console.log('ap', appointment)
     this.dialog.open(ModalAppointmentComponent, {
       data: { currentAppointment: appointment }
     });
@@ -128,9 +129,6 @@ export class DropListComponent implements OnInit, OnDestroy {
   verififyLengthDifference(appointmentsUpdated: IAppointmentResponse) {
     const disabled = this.appointments.filter(el => el.disabled == false)
 
-    console.log(disabled)
-    console.log(Object.values(appointmentsUpdated))
-
     if (disabled > Object.values(appointmentsUpdated)) {
       this.appointments = new Array(24).fill({
         appointment: {
@@ -143,6 +141,10 @@ export class DropListComponent implements OnInit, OnDestroy {
         disabled: true
       })
     }
+  }
+
+  goToDate(date: Date) {
+    this.dateService.changeDayOfYearByDate(date)
   }
 
 }
