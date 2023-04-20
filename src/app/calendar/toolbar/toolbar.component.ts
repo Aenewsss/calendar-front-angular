@@ -18,4 +18,8 @@ export class ToolbarComponent {
     this.dateService.handleDayOfYear(e.pageIndex)
     this.selectedDate = this.dateService.handleSelectedDate(e.pageIndex)
   }
+
+  openMyGithubRepo(){
+    window.open("https://github.com/Aenewsss/calendar-front-angular", "_blank")
+  }
 }

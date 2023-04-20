@@ -71,13 +71,13 @@ export class DropListComponent implements OnInit {
         disabled: true
       }
 
-      if (this.currentDate.getDate() == new Date(appointment.date).getDate()) {
+      if ((this.currentDate.getDate() == new Date(appointment.date).getDate()) && (this.currentDate.getMonth() == new Date(appointment.date).getMonth())) {
 
         const hourFormatted = this.formatTimeIndex(appointment.time)
 
         this.appointments[hourFormatted] = {
           appointment: {
-            id: appointment.id, title: appointment.title, date: appointment.date, time: appointment.time
+            id: appointment.id, title: appointment.title, date: appointment.date, time: appointment.time, description: appointment.description
           },
           disabled: false
         }
@@ -104,6 +104,7 @@ export class DropListComponent implements OnInit {
   }
 
   openAppointment(appointment: IAppointment) {
+    console.log('ap', appointment)
     this.dialog.open(ModalAppointmentComponent, {
       data: { currentAppointment: appointment }
     });
@@ -130,7 +131,7 @@ export class DropListComponent implements OnInit {
     console.log(disabled)
     console.log(Object.values(appointmentsUpdated))
 
-    if(disabled > Object.values(appointmentsUpdated)){
+    if (disabled > Object.values(appointmentsUpdated)) {
       this.appointments = new Array(24).fill({
         appointment: {
           id: '',

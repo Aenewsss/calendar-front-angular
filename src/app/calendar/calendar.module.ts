@@ -20,8 +20,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule,  } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ModalAppointmentComponent } from './modal-appointment/modal-appointment.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -29,8 +30,8 @@ import { ModalAppointmentComponent } from './modal-appointment/modal-appointment
     NewAppointmentComponent,
     ToolbarComponent,
     DropListComponent,
-    ModalNewAppointment,
     ModalAppointmentComponent,
+    ModalNewAppointment
   ],
   imports: [
     FormsModule,
@@ -51,6 +52,7 @@ import { ModalAppointmentComponent } from './modal-appointment/modal-appointment
     MatInputModule,
     MatExpansionModule,
     MatSelectModule,
+    MatSnackBarModule
   ]
 })
 export class CalendarModule { }
