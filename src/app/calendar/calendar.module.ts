@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { MatCardModule } from "@angular/material/card"
 import { MatDatepickerModule } from "@angular/material/datepicker"
-import { ModalNewAppointment, NewAppointmentComponent } from './new-appointment/new-appointment.component';
+import { ModalNewAppointmentComponent, NewAppointmentComponent } from './new-appointment/new-appointment.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,7 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ToolbarComponent,
     DropListComponent,
     ModalAppointmentComponent,
-    ModalNewAppointment
+    ModalNewAppointmentComponent
   ],
   imports: [
     FormsModule,

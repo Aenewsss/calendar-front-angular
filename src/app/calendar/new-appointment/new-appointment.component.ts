@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { AppointmentDto } from 'src/dtos/appointment.dto';
 import { SnackEmojiEnum } from 'src/dtos/snack-emoji.enum';
 import { SnackMessagesEnum } from 'src/dtos/snack-messages.enum';
+import { IAppointment, IAppointmentResponse } from "src/interfaces/appointment.interface";
 import { IModalData } from 'src/interfaces/modal-data.interface';
 import { AppointmentService } from 'src/services/appointment.service';
 import { DateService } from 'src/services/date.service';
@@ -15,7 +16,7 @@ import { SELECT_HOURS, } from 'src/utils/select-hours.constants';
   templateUrl: './new-appointment.component.html',
   styleUrls: ['./new-appointment.component.scss']
 })
-export class NewAppointmentComponent {
+export class NewAppointmentComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
@@ -41,7 +42,7 @@ export class NewAppointmentComponent {
   }
 
   openDialog() {
-    this.dialog.open(ModalNewAppointment, {
+    this.dialog.open(ModalNewAppointmentComponent, {
       data: { currentDate: this.currentDate }
     });
   }
@@ -49,13 +50,13 @@ export class NewAppointmentComponent {
 }
 
 @Component({
-  selector: 'modal-new-appointment',
+  selector: 'app-modal-new-appointment',
   templateUrl: 'modal-new-appointment.html',
   styleUrls: ['./new-appointment.component.scss']
 })
-export class ModalNewAppointment implements OnInit {
+export class ModalNewAppointmentComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<ModalNewAppointment>,
+    public dialogRef: MatDialogRef<ModalNewAppointmentComponent>,
     private appointmentsService: AppointmentService,
     @Inject(MAT_DIALOG_DATA) public data: IModalData,
     private snackBar: MatSnackBar
@@ -99,9 +100,9 @@ export class ModalNewAppointment implements OnInit {
     return this.selectHours.filter(el => el.split(':')[0] == hour.toString() && (Number(el.split(':')[1]) > minutes || minutes > Number(el.split(':')[1])))[0]
   }
 
-  checkAvailableTimes(appointments: any) {
+  checkAvailableTimes(appointments: IAppointmentResponse) {
     if(this.appointmentDate.getDate() == new Date().getDate()){
-      const unavailableTimes = appointments?.flatMap((el: any) => SELECT_HOURS.filter(hour => hour.split(':')[0] == el.time.split(':')[0]))
+      const unavailableTimes = Object.values(appointments)?.flatMap((el: IAppointment) => SELECT_HOURS.filter(hour => hour.split(':')[0] == el.time.split(':')[0]))
       
       const availableTimes = this.selectHours.filter(hour => !unavailableTimes.includes(hour))
       

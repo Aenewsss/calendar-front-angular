@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Subscription } from 'rxjs';
 import { AppointmentService } from 'src/services/appointment.service';
@@ -15,7 +15,7 @@ import { ModalAppointmentComponent } from '../modal-appointment/modal-appointmen
   templateUrl: './drop-list.component.html',
   styleUrls: ['./drop-list.component.scss']
 })
-export class DropListComponent implements OnInit {
+export class DropListComponent implements OnInit, OnDestroy {
 
   constructor(
     private appointmentsService: AppointmentService,

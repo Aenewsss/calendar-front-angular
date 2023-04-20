@@ -10,9 +10,8 @@ export class DateService {
   private selectedIndexUpdated = new Subject<number>();
 
   handleSelectedDate(newDayOfYear?: number) {
-    let dayOfYear;
 
-    dayOfYear = newDayOfYear ? newDayOfYear : this.getTodayDayOfYear()
+    const dayOfYear = newDayOfYear ? newDayOfYear : this.getTodayDayOfYear()
 
     const currentDate = new Date()
 

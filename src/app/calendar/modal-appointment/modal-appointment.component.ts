@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackEmojiEnum } from 'src/dtos/snack-emoji.enum';
 import { SnackMessagesEnum } from 'src/dtos/snack-messages.enum';
-import { IAppointment, IModalAppointment } from 'src/interfaces/appointment.interface';
+import { IAppointment, IAppointmentResponse, IModalAppointment } from 'src/interfaces/appointment.interface';
 import { AppointmentService } from 'src/services/appointment.service';
 import { SELECT_HOURS } from 'src/utils/select-hours.constants';
 
@@ -68,9 +68,9 @@ export class ModalAppointmentComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  checkAvailableTimes(appointments: any) {
+  checkAvailableTimes(appointments: IAppointmentResponse) {
     if(new Date(this.appointmentDate).getDate() == new Date().getDate()){
-      const unavailableTimes = appointments?.flatMap((el: any) => SELECT_HOURS.filter(hour => hour.split(':')[0] == el.time.split(':')[0]))
+      const unavailableTimes = Object.values(appointments)?.flatMap((el: IAppointment) => SELECT_HOURS.filter(hour => hour.split(':')[0] == el.time.split(':')[0]))
       
       const availableTimes = this.selectHours.filter(hour => !unavailableTimes.includes(hour))
       

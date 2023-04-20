@@ -28,9 +28,9 @@ export class AppointmentService {
 
   NewAppointment(appointment: AppointmentDto): Observable<IAppointment> {
     appointment.id = uuidv4()
-    const newAppointment = this.client.post<any>(this.apiBaseUrl, appointment)
+    const newAppointment = this.client.post<IAppointment>(this.apiBaseUrl, appointment)
 
-    newAppointment.subscribe(res => {
+    newAppointment.subscribe(() => {
       this.GetAppointments().subscribe(response => {
         this.appointmentsUpdated.next(response);
       })
